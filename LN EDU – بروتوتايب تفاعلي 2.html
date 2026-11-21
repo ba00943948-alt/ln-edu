@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LN EDU – بروتوتايب تفاعلي</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F6F3FC;--card:#fff;--ink:#2A2140;--mute:#6E6585;--pri:#7B5CC4;--pri2:#EDE6FA;--line:#E2DAF3;--ok:#2F9E6E;--warn:#D9902F;--bad:#C9505F;--skin:#F3D9CC;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171322;--card:#241E36;--ink:#F1ECFB;--mute:#A99FC4;--pri:#A58CE6;--pri2:#33294D;--line:#3A3057;--skin:#6B4F48}}
+:root[data-theme="dark"]{--bg:#171322;--card:#241E36;--ink:#F1ECFB;--mute:#A99FC4;--pri:#A58CE6;--pri2:#33294D;--line:#3A3057;--skin:#6B4F48}
+*{box-sizing:border-box;margin:0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--ink);font:400 15px/1.6 'IBM Plex Sans Arabic',system-ui,sans-serif;min-height:100vh}
+#app{max-width:440px;margin:0 auto;padding:16px 16px 40px}
+h1{font-size:22px;font-weight:700}h2{font-size:18px;font-weight:600;margin-bottom:4px}h3{font-size:15px;font-weight:600}
+p.m,.m{color:var(--mute);font-size:13px}
+.top{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.back{border:0;background:var(--pri2);color:var(--pri);width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer}
+.logo{font-weight:700;color:var(--pri);letter-spacing:.5px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:10px}
+.btn{display:block;width:100%;border:0;background:var(--pri);color:#fff;font:600 15px inherit;font-family:inherit;padding:13px;border-radius:12px;cursor:pointer;margin-top:12px}
+.btn.alt{background:var(--pri2);color:var(--pri)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.row{display:flex;align-items:center;gap:12px;cursor:pointer;text-align:start;width:100%;font-family:inherit;color:inherit}
+button.card{display:flex}
+.ic{width:46px;height:46px;border-radius:14px;background:var(--pri2);display:grid;place-items:center;font-size:22px;flex:none}
+.grow{flex:1}.arr{color:var(--pri);font-size:18px}
+.steps{display:flex;align-items:center;justify-content:center;gap:4px;margin:0 0 14px;flex-wrap:wrap}
+.st{font-size:12px;padding:4px 10px;border-radius:99px;background:var(--pri2);color:var(--mute)}
+.st.on{background:var(--pri);color:#fff}.st.done{color:var(--pri)}
+.sa{color:var(--pri);font-size:12px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.tag{font-size:12px;padding:2px 10px;border-radius:99px;background:var(--pri2);color:var(--pri)}
+.opt{display:flex;gap:10px;align-items:center;border:1.5px solid var(--line);background:var(--card);border-radius:14px;padding:12px;margin-bottom:8px;width:100%;font:inherit;color:inherit;cursor:pointer;text-align:start}
+.opt.sel{border-color:var(--pri);background:var(--pri2)}
+.num{width:28px;height:28px;border-radius:50%;border:1.5px dashed var(--mute);display:grid;place-items:center;font-weight:700;font-size:13px;flex:none}
+.opt.sel .num{background:var(--pri);color:#fff;border:0}
+.bar{height:8px;border-radius:9px;background:var(--pri2);overflow:hidden;margin:4px 0 10px}
+.bar i{display:block;height:100%;border-radius:9px}
+.cam{background:#14101F;border-radius:18px;aspect-ratio:3/4;position:relative;overflow:hidden;display:grid;place-items:center;color:#fff}
+.rec{position:absolute;top:12px;inset-inline-start:12px;font-size:12px;background:#0008;padding:3px 10px;border-radius:99px}
+.rec b{color:#ff4d5e}
+.corner{position:absolute;border:2px solid #fff8;width:26px;height:26px}
+.big{font-size:44px;font-weight:700;color:var(--pri);line-height:1.1}
+.tabs{display:flex;gap:6px;margin-bottom:12px}
+.tab{flex:1;border:0;padding:10px;border-radius:12px;background:var(--pri2);color:var(--pri);font:600 13px inherit;font-family:inherit;cursor:pointer}
+.tab.on{background:var(--pri);color:#fff}
+.pill{font-size:12px;padding:2px 10px;border-radius:99px}
+.ab{background:#2F9E6E22;color:var(--ok)}.nab{background:#D9902F22;color:var(--warn)}
+ul{padding-inline-start:20px}li{margin:3px 0}
+.lang{margin-inline-start:auto;border:1px solid var(--line);background:var(--card);color:var(--pri);font:600 13px inherit;font-family:inherit;padding:6px 12px;border-radius:99px;cursor:pointer}
+.fm{display:flex;justify-content:center;align-items:center;gap:4px;font-size:12px;color:var(--mute);margin-top:6px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const $=s=>document.querySelector(s);
+const S={scr:'home',l:0,case:0,pick:[],stitch:0,t:0,lib:'ab',suture:0};
+const hist=[];
+const x=a=>a[S.l];
+const AR=()=>S.l?'→':'←',BK=()=>S.l?'←':'→';
+const CASES=[
+{t:['جرح قطعي في الجبهة','Forehead laceration'],lv:['مبتدئ','Beginner'],info:['ذكر، 25 سنة، سقوط على حافة طاولة. الجرح 3 سم، نظيف، غير ملوّث، بدون فقد نسيج.','Male, 25, fell onto a table edge. 3 cm clean wound, no contamination or tissue loss.'],site:['وجه','Face'],
+ideal:[['نايلون 6-0 (Nylon)','Nylon 6-0'],['برولين 5-0 (Prolene)','Prolene 5-0'],['فيكريل 3-0 (Vicryl)','Vicryl 3-0'],['حرير 3-0 (Silk)','Silk 3-0']],
+why:['منطقة الوجه تتطلب أقل أثر تندّبي: خيط أحادي الشعيرة غير ماص دقيق (6-0 أو 5-0) يقلل التفاعل النسيجي. الفيكريل ماص ومناسب للطبقات العميقة لا للجلد الظاهر، والحرير مضفور يسبب تفاعلاً التهابياً أعلى وقد يحتفظ بالجراثيم.','The face calls for minimal scarring: a fine non-absorbable monofilament (6-0 or 5-0) causes the least tissue reaction. Vicryl is absorbable and suited to deep layers, not visible skin. Silk is braided, causing more inflammation and harboring bacteria.']},
+{t:['إغلاق جرح جراحي في الساعد','Surgical forearm closure'],lv:['متوسط','Intermediate'],info:['أنثى، 40 سنة، شق جراحي نظيف طوله 5 سم، توتر متوسط على الجلد.','Female, 40, clean 5 cm surgical incision with moderate skin tension.'],site:['طرف','Limb'],
+ideal:[['نايلون 4-0 (Nylon)','Nylon 4-0'],['برولين 4-0 (Prolene)','Prolene 4-0'],['مونوكريل 4-0 (Monocryl)','Monocryl 4-0'],['كرومك كاتجت 3-0 (Chromic)','Chromic catgut 3-0']],
+why:['الأطراف تحتمل خيطاً أحادي الشعيرة غير ماص بسماكة 4-0 لقوة شد مناسبة. المونوكريل ماص ويصلح تحت الجلد، أما الكاتجت فيفقد قوته بسرعة ويسبب تفاعلاً أعلى فهو الأقل ملاءمة للجلد.','Limbs tolerate a 4-0 non-absorbable monofilament with good tensile strength. Monocryl is absorbable and suits subcuticular work, while catgut loses strength fast and reacts more, making it least suitable for skin.']}];
+const STITCH=[
+{n:['الغرزة المتقطعة البسيطة','Simple interrupted'],s:[['ثبّت قطعة السيليكون وأمسك الإبرة بمنتصفها.','Fix the silicone pad and grip the needle at its midpoint.'],['أدخل الإبرة بزاوية 90° على بعد 5 مم من الحافة.','Enter at 90°, 5 mm from the wound edge.'],['أخرج الإبرة من الحافة المقابلة بنفس البعد.','Exit the opposite edge at the same distance.'],['اربط عقدة جراحية مربعة وقص الخيط.','Tie a square surgical knot and cut the thread.'],['كرّر الغرز بمسافة 5-10 مم بينها.','Repeat with 5-10 mm between stitches.']]},
+{n:['الغرزة المستمرة','Simple continuous'],s:[['ابدأ بغرزة متقطعة وعقدة أولى دون قص الخيط.','Start with an interrupted stitch and knot, without cutting the thread.'],['أكمل الغرز بزاوية مائلة منتظمة.','Continue with evenly angled passes.'],['حافظ على شدّ ثابت دون تجعيد الحواف.','Keep tension even without puckering the edges.'],['اربط الطرف الأخير مع حلقة الخيط.','Tie the final end to the thread loop.']]},
+{n:['غرزة المرتبة العمودية','Vertical mattress'],s:[['أدخل الإبرة بعيداً عن الحافة (8 مم) واعبر الجرح.','Enter 8 mm from the edge and cross the wound.'],['ارجع بغرزة سطحية قريبة من الحافة (2 مم).','Return with a shallow bite 2 mm from the edge.'],['شدّ الحواف لتنقلب للخارج قليلاً.','Tighten so the edges evert slightly.'],['اربط العقدة على جانب واحد.','Tie the knot to one side.']]},
+{n:['غرزة تحت الجلد','Subcuticular'],s:[['ابدأ من طرف الجرح داخل الأدمة.','Start at the wound end within the dermis.'],['خذ عضات أفقية متقابلة في الأدمة.','Take alternating horizontal bites in the dermis.'],['اسحب الخيط تدريجياً لتقريب الحواف.','Pull gradually to approximate the edges.'],['أنهِ بعقدة مدفونة أو تثبيت بسيط.','Finish with a buried knot or simple anchor.']]}];
+const LIB=[
+{k:'ab',n:['فيكريل (Vicryl)','Vicryl'],tp:['مضفور – ماص','Braided, absorbable'],day:['يحتفظ بقوته 2-3 أسابيع','Holds strength ~2-3 weeks'],use:['الطبقات العميقة، الأنسجة الرخوة، التوليد','Deep layers, soft tissue, obstetrics'],pro:['سهل العقد وآمن','Easy, secure knots'],con:['تفاعل نسيجي أعلى من الأحادي','More tissue reaction than monofilament']},
+{k:'ab',n:['مونوكريل (Monocryl)','Monocryl'],tp:['أحادي – ماص','Monofilament, absorbable'],day:['قوة 2-3 أسابيع','Strength ~2-3 weeks'],use:['غرز تحت الجلد، الجراحة التجميلية','Subcuticular, plastic surgery'],pro:['نعومة وتفاعل قليل','Smooth, low reaction'],con:['عقده أقل أماناً','Less secure knots']},
+{k:'ab',n:['PDS','PDS'],tp:['أحادي – ماص طويل المدى','Monofilament, long-term absorbable'],day:['قوة 4-6 أسابيع','Strength ~4-6 weeks'],use:['إغلاق اللفافة، الأنسجة بطيئة الالتئام','Fascial closure, slow-healing tissue'],pro:['دعم طويل الأمد','Long-lasting support'],con:['أقل مرونة','Stiffer handling']},
+{k:'ab',n:['كرومك كاتجت (Chromic)','Chromic catgut'],tp:['طبيعي – ماص','Natural, absorbable'],day:['قوة 7-10 أيام','Strength ~7-10 days'],use:['الأغشية المخاطية، الأنسجة سريعة الالتئام','Mucosa, fast-healing tissue'],pro:['يمتص بسرعة','Absorbs quickly'],con:['تفاعل التهابي أعلى','Higher inflammatory reaction']},
+{k:'nab',n:['نايلون (Nylon)','Nylon'],tp:['أحادي – غير ماص','Monofilament, non-absorbable'],day:['يفقد قوته ببطء شديد','Very slow strength loss'],use:['خياطة الجلد، الوجه','Skin and facial closure'],pro:['تفاعل نسيجي منخفض','Low tissue reaction'],con:['ذاكرة تجعد، يحتاج عقداً إضافية','Memory/coiling, needs extra throws']},
+{k:'nab',n:['برولين (Prolene)','Prolene'],tp:['أحادي – غير ماص','Monofilament, non-absorbable'],day:['ثابت القوة','Stable strength'],use:['الجلد، الأوعية الدموية، التجميل','Skin, vascular, plastic surgery'],pro:['انزلاق سلس وتفاعل أدنى','Smooth passage, minimal reaction'],con:['عقده قد تنحل','Knots may slip']},
+{k:'nab',n:['حرير (Silk)','Silk'],tp:['مضفور – غير ماص','Braided, non-absorbable'],day:['يتحلل ببطء خلال سنوات','Degrades slowly over years'],use:['ربط الأوعية، الغرز المؤقتة','Ligatures, temporary stitches'],pro:['سهل الاستخدام والربط','Easy handling and tying'],con:['يسبب التهاباً وقد يحتفظ بالجراثيم','Inflammatory, can harbor bacteria']},
+{k:'nab',n:['فولاذ مقاوم للصدأ','Stainless steel'],tp:['معدني – غير ماص','Metallic, non-absorbable'],day:['دائم','Permanent'],use:['إغلاق القص والعظام','Sternum and bone closure'],pro:['أعلى قوة شدّ','Highest tensile strength'],con:['صعب التعامل','Difficult to handle']}];
+const SN=[['نوع الغرزة','التعليمات','التسجيل','التحليل','النتيجة'],['Stitch type','Instructions','Recording','Analysis','Result']];
+const EN=[['اختيار الحالة','بيانات الحالة','الخيوط','النتيجة'],['Select case','Case data','Sutures','Result']];
+
+const F={
+home:()=>`<div class="top"><span class="logo">LN EDU</span>${lg()}</div>
+<h1>${x(['مرحباً بك في LN EDU','Welcome to LN EDU'])}</h1><p class="m" style="margin:4px 0 16px">${x(['منصة تعليم وتدريب الخياطة الجراحية لطلاب الطب وأطباء الامتياز','Surgical suturing education and training for medical students and interns'])}</p>
+${[['education','📚','Education',['تعلّم اختيار الخيط الأنسب لكل حالة','Learn to choose the right suture for each case']],['sa','🎥','Suture Assessment',['تدرّب على الغرز أمام الكاميرا واحصل على تقييم','Practice stitches on camera and get scored']],['lib','🧵','Suture Education',['مكتبة الخيوط الجراحية وخصائصها','Library of surgical sutures and properties']]].map(a=>`<button class="card row" onclick="go('${a[0]}')"><span class="ic">${a[1]}</span><span class="grow"><h3>${a[2]}</h3><span class="m">${x(a[3])}</span></span><span class="arr">${AR()}</span></button>`).join('')}
+<p class="m" style="text-align:center;margin-top:14px">${x(['بروتوتايب تفاعلي – جرّب التنقل بين الأقسام','Interactive prototype: try moving between sections'])}</p>`,
+
+education:()=>`${hdr('Education')}${steps(EN,0)}<h2>${x(['اختر حالة تعليمية','Choose a teaching case'])}</h2>
+${CASES.map((c,i)=>`<button class="card row" onclick="S.case=${i};S.pick=[];go('ecase')"><span class="ic">🩹</span><span class="grow"><h3>${x(c.t)}</h3><span class="m">${x(['المستوى: ','Level: '])}${x(c.lv)}</span></span><span class="arr">${AR()}</span></button>`).join('')}`,
+
+ecase:()=>{const c=CASES[S.case];return `${hdr(x(['بيانات الحالة','Case data']))}${steps(EN,1)}
+<div class="card"><svg viewBox="0 0 300 150" width="100%" role="img"><rect width="300" height="150" rx="12" fill="var(--skin)"/><path d="M40 78 Q90 60 150 78 T260 72" stroke="#B03A48" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M40 78 Q90 60 150 78 T260 72" stroke="#7a1f2b" stroke-width="2.5" fill="none"/><text x="150" y="132" text-anchor="middle" font-size="12" fill="var(--ink)">${x(['صورة توضيحية – ','Illustration: '])}${x(c.t)}</text></svg></div>
+<div class="card"><h3>${x(c.t)}</h3><p style="margin-top:6px">${x(c.info)}</p><div class="tags"><span class="tag">${x(['الموضع: ','Site: '])}${x(c.site)}</span><span class="tag">${x(['جرح نظيف','Clean wound'])}</span></div></div>
+<button class="btn" onclick="go('esut')">${x(['عرض خيارات الخيوط','View suture options'])} ${AR()}</button>`},
+
+esut:()=>{const c=CASES[S.case];return `${hdr(x(['خيارات الخيوط','Suture options']))}${steps(EN,2)}
+<h2>${x(['رتّب الخيوط من الأنسب إلى الأقل مناسبة','Rank sutures from most to least suitable'])}</h2><p class="m" style="margin-bottom:10px">${x(['اضغط على الخيوط بالترتيب. اضغط مجدداً لإلغاء الاختيار.','Tap sutures in order. Tap again to undo.'])}</p>
+${[3,2,1,0].map(o=>{const i=S.pick.indexOf(o);return `<button class="opt ${i>=0?'sel':''}" onclick="pick(${o})"><span class="num">${i>=0?i+1:''}</span>${x(c.ideal[o])}</button>`}).join('')}
+<button class="btn" ${S.pick.length<4?'disabled':''} onclick="go('eres')">${x(['عرض النتيجة','Show result'])} ${AR()}</button>`},
+
+eres:()=>{const c=CASES[S.case];const ok=[0,1,2,3].filter(i=>S.pick[i]===i).length;return `${hdr(x(['النتيجة','Result']))}${steps(EN,3)}
+<div class="card" style="text-align:center"><div class="big">${ok}/4</div><p class="m">${x(['ترتيبات صحيحة','correct placements'])}</p></div>
+<div class="card"><h3 style="margin-bottom:8px">${x(['مقارنة الترتيب','Ranking comparison'])}</h3>${c.ideal.map((o,i)=>`<div class="m" style="display:flex;gap:8px;margin:6px 0"><b style="color:${S.pick[i]===i?'var(--ok)':'var(--bad)'}">${i+1}</b><span>${x(['الأمثل: ','Ideal: '])}${x(o)}<br>${x(['ترتيبك: ','Yours: '])}${x(c.ideal[S.pick[i]])}</span></div>`).join('')}</div>
+<div class="card"><h3>${x(['التفسير العلمي','Scientific explanation'])}</h3><p style="margin-top:6px">${x(c.why)}</p></div>
+<button class="btn" onclick="S.scr='education';hist.length=1;render()">${x(['حالة جديدة','New case'])}</button>`},
+
+sa:()=>`${hdr('Suture Assessment')}${steps(SN,0)}<h2>${x(['اختر الغرزة المراد التدريب عليها','Choose the stitch to practice'])}</h2>
+${STITCH.map((s,i)=>`<button class="card row" onclick="S.stitch=${i};go('sins')"><span class="ic">🪡</span><span class="grow"><h3>${x(s.n)}</h3></span><span class="arr">${AR()}</span></button>`).join('')}`,
+
+sins:()=>{const s=STITCH[S.stitch];return `${hdr(x(['تعليمات التدريب','Training instructions']))}${steps(SN,1)}
+<h2>${x(s.n)}</h2>
+<div class="card"><h3>${x(['قبل البدء','Before you start'])}</h3><ul class="m">${x([['قطعة سيليكون تدريبية مثبتة على سطح مستوٍ','إبرة وخيط، ماسك إبر، ملقط، مقص','ضع الجهاز بحيث تظهر القطعة وحركة يديك'],['Silicone training pad fixed on a flat surface','Needle and thread, needle holder, forceps, scissors','Position the device so the pad and your hands are in frame']]).map(t=>`<li>${t}</li>`).join('')}</ul></div>
+<div class="card"><h3>${x(['خطوات التنفيذ','Steps'])}</h3><ol style="padding-inline-start:20px">${s.s.map(t=>`<li>${x(t)}</li>`).join('')}</ol></div>
+<button class="btn" onclick="S.t=0;go('scam')">🎥 ${x(['جاهز، افتح الكاميرا','Ready, open camera'])}</button>`},
+
+scam:()=>`${hdr(x(['تسجيل الأداء','Record performance']))}${steps(SN,2)}
+<div class="cam"><span class="rec"><b id="dot">●</b> <span id="tm">00:00</span></span>
+<span class="corner" style="top:20%;inset-inline-start:15%;border-width:2px 0 0 2px"></span><span class="corner" style="top:20%;inset-inline-end:15%;border-width:2px 2px 0 0"></span><span class="corner" style="bottom:20%;inset-inline-start:15%;border-width:0 0 2px 2px"></span><span class="corner" style="bottom:20%;inset-inline-end:15%;border-width:0 2px 2px 0"></span>
+<svg viewBox="0 0 200 120" width="62%"><rect x="10" y="20" width="180" height="80" rx="10" fill="#E9B8A8"/><path d="M20 60 H180" stroke="#7a1f2b" stroke-width="3"/>${[40,70,100,130,160].map(v=>`<path d="M${v} 45 L${v+4} 75" stroke="#222" stroke-width="2"/>`).join('')}</svg>
+<span class="m" style="position:absolute;bottom:12px;color:#fffb">${x(['ضع قطعة السيليكون داخل الإطار','Place the silicone pad inside the frame'])}</span></div>
+<button class="btn" id="rb" onclick="rec()">⏺ ${x(['بدء التسجيل','Start recording'])}</button>`,
+
+sana:()=>`${hdr(x(['تحليل الأداء','Performance analysis']))}${steps(SN,3)}
+<div class="card" style="text-align:center;padding:30px 14px"><div class="big" id="pc">0%</div><p class="m" style="margin:6px 0 14px">${x(['جارٍ تحليل الفيديو (محاكاة)','Analyzing video (simulated)'])}</p><div class="bar"><i id="pb" style="width:0;background:var(--pri)"></i></div>
+<p class="m" id="pm"></p></div>`,
+
+sres:()=>{const K=[[['انتظام المسافات بين الغرز','Stitch spacing regularity'],82,['المسافات متقاربة، الغرزة الثالثة أبعد بحوالي 2 مم.','Spacing is close; stitch 3 sits about 2 mm too far.']],[['تقارب حواف الجرح','Wound edge approximation'],74,['أدخل الإبرة بزاوية 90° لتقليل تباعد الحواف.','Enter the needle at 90° to reduce edge gaps.']],[['انتظام توزيع الغرز','Stitch distribution'],88,['توزيع جيد على طول الجرح.','Good distribution along the wound.']],[['جودة المظهر النهائي','Final appearance'],70,['شدّ العقدة أقوى قليلاً دون تجعيد الجلد.','Tighten knots slightly more without puckering skin.']]];const tot=Math.round(K.reduce((a,k)=>a+k[1],0)/4);
+return `${hdr(x(['نتيجة التقييم','Assessment result']))}${steps(SN,4)}
+<div class="card" style="text-align:center"><div class="big">${tot}%</div><p class="m">${x(['التقييم العام – ','Overall score: '])}${x(STITCH[S.stitch].n)}</p></div>
+<div class="card">${K.map(k=>`<div style="display:flex;justify-content:space-between"><span>${x(k[0])}</span><b>${k[1]}%</b></div><div class="bar"><i style="width:${k[1]}%;background:${k[1]>=80?'var(--ok)':k[1]>=72?'var(--warn)':'var(--bad)'}"></i></div>`).join('')}</div>
+<div class="card"><h3>${x(['ملاحظات التحسين','Improvement notes'])}</h3><ul class="m">${K.map(k=>`<li>${x(k[2])}</li>`).join('')}</ul></div>
+<button class="btn" onclick="S.t=0;go('scam')">${x(['إعادة المحاولة','Try again'])}</button><button class="btn alt" onclick="S.scr='sa';hist.length=1;render()">${x(['غرزة أخرى','Another stitch'])}</button>`},
+
+lib:()=>`${hdr('Suture Education')}<div class="tabs"><button class="tab ${S.lib==='ab'?'on':''}" onclick="S.lib='ab';render()">${x(['قابلة للامتصاص','Absorbable'])}</button><button class="tab ${S.lib==='nab'?'on':''}" onclick="S.lib='nab';render()">${x(['غير قابلة للامتصاص','Non-absorbable'])}</button></div>
+${LIB.map((l,i)=>l.k===S.lib?`<button class="card row" onclick="S.suture=${i};go('ldet')"><span class="ic">🧵</span><span class="grow"><h3>${x(l.n)}</h3><span class="m">${x(l.tp)}</span></span><span class="arr">${AR()}</span></button>`:'').join('')}`,
+
+ldet:()=>{const l=LIB[S.suture];return `${hdr(x(l.n))}<div class="card"><span class="pill ${l.k}">${l.k==='ab'?x(['قابل للامتصاص','Absorbable']):x(['غير قابل للامتصاص','Non-absorbable'])}</span>
+<h2 style="margin-top:8px">${x(l.n)}</h2><p class="m">${x(l.tp)}</p></div>
+<div class="card"><h3>${x(['الخصائص','Properties'])}</h3><p>${x(l.day)}</p></div><div class="card"><h3>${x(['الاستخدامات الطبية','Clinical uses'])}</h3><p>${x(l.use)}</p></div>
+<div class="card"><h3>${x(['المميزات والاختلافات','Advantages and differences'])}</h3><p style="color:var(--ok)">＋ ${x(l.pro)}</p><p style="color:var(--bad)">－ ${x(l.con)}</p></div>`}
+};
+function lg(){return `<button class="lang" onclick="S.l=1-S.l;render()">${S.l?'العربية':'English'}</button>`}
+function steps(a,n){const L=a[S.l];return `<div class="steps">${L.map((t,i)=>`<span class="st ${i===n?'on':i<n?'done':''}">${i+1}. ${t}</span>${i<L.length-1?`<span class="sa">${AR()}</span>`:''}`).join('')}</div>`}
+function hdr(t){return `<div class="top"><button class="back" onclick="back()" aria-label="back">${BK()}</button><h2 style="margin:0">${t}</h2>${lg()}</div>`}
+function render(){document.documentElement.lang=S.l?'en':'ar';document.documentElement.dir=S.l?'ltr':'rtl';$('#app').innerHTML=F[S.scr]();if(S.scr==='sana')$('#pm').textContent=x(['قياس المسافات بين الغرز…','Measuring stitch spacing…']);window.scrollTo(0,0)}
+function go(s){hist.push(S.scr);S.scr=s;render();if(s==='sana')analyze()}
+function back(){clearInterval(S.iv);S.iv=0;if(S.scr==='sana'||S.scr==='sres'){hist.length=1;S.scr='sa'}else S.scr=hist.pop()||'home';render()}
+function pick(o){const i=S.pick.indexOf(o);i>=0?S.pick.splice(i,1):S.pick.push(o);render()}
+function rec(){const b=$('#rb');if(S.iv){clearInterval(S.iv);S.iv=0;go('sana');return}
+b.textContent='⏹ '+x(['إنهاء التسجيل','Stop recording']);S.t=0;S.iv=setInterval(()=>{S.t++;$('#tm').textContent='00:'+String(S.t).padStart(2,'0');$('#dot').style.opacity=S.t%2?.3:1},1000)}
+function analyze(){let p=0;const m=[['قياس المسافات بين الغرز…','Measuring stitch spacing…'],['فحص تقارب الحواف…','Checking edge approximation…'],['تقييم توزيع الغرز…','Assessing distribution…'],['تحليل المظهر النهائي…','Analyzing final appearance…']];
+const iv=setInterval(()=>{p+=5;if(!$('#pc')){clearInterval(iv);return}$('#pc').textContent=p+'%';$('#pb').style.width=p+'%';$('#pm').textContent=x(m[Math.min(3,Math.floor(p/26))]);
+if(p>=100){clearInterval(iv);S.scr='sres';hist.push('sana');render()}},150)}
+render();
+</script>
+</body>
+</html>
