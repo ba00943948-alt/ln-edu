@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LN PRO</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap">
+<style>
+:root{--bg:#f2f5f9;--surf:#fff;--ink:#16202e;--mut:#66758a;--line:#e3e9f0;--navy:#1d3a6b;--pri:#1d6f8c;--pri2:#e3f1f6;--on:#fff;--ok:#1b7f55;--okbg:#e2f4ea;--warn:#a65d00;--warnbg:#fdf0db;--bad:#b3261e;--badbg:#fbe6e4;--skin:#f1c9a5}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d141c;--surf:#16212c;--ink:#e8eef4;--mut:#91a1b3;--line:#263544;--navy:#0f2347;--pri:#5cb8d9;--pri2:#16313c;--on:#06222d;--ok:#5fd39b;--okbg:#14301f;--warn:#f0b35a;--warnbg:#33260f;--bad:#f2837c;--badbg:#3a1a18;--skin:#8a6a52}}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;overflow:hidden}
+body{background:#cfd6de;color:var(--ink);font-family:"IBM Plex Sans Arabic",system-ui,sans-serif;font-size:16px;line-height:1.5}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) body{background:#05080c}}
+#dev{position:absolute;left:0;top:0;width:1300px;height:840px;transform-origin:0 0;background:#10151b;border-radius:34px;padding:28px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+#dev::after{content:"";position:absolute;top:11px;left:50%;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:#2a323b}
+#scr{width:1244px;height:784px;border-radius:12px;overflow:hidden;background:var(--bg);display:flex;flex-direction:column;position:relative}
+.bar{background:var(--navy);color:#fff;display:flex;align-items:center;gap:16px;padding:0 22px;height:56px;flex:none;font-size:15px}
+.bar.em{background:var(--bad)}
+.bar b{font-size:20px}.grow{flex:1}
+.bar button{background:rgba(255,255,255,.16);color:#fff;border:0;border-radius:8px;padding:8px 14px;font:inherit;font-size:14px;cursor:pointer;min-height:40px}
+#body{flex:1;min-height:0;overflow-y:auto;padding:22px 28px}
+.steps{display:flex;gap:10px;margin-bottom:18px}
+.steps div{flex:1;padding:10px 14px;border-radius:10px;background:var(--surf);border:1px solid var(--line);color:var(--mut);font-size:15px;font-weight:500}
+.steps div.on{background:var(--pri);color:var(--on);border-color:var(--pri)}
+.steps div.dn{color:var(--ok)}
+h1{margin:0 0 4px;font-size:28px}h2{margin:0 0 12px;font-size:19px}
+.sub{color:var(--mut);margin:0 0 20px}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:16px;padding:20px}
+.two{display:grid;grid-template-columns:1fr 340px;gap:18px;align-items:start}
+.grid{display:grid;gap:16px}.g2{grid-template-columns:1fr 1fr}.g4{grid-template-columns:repeat(4,1fr)}
+.big{font:inherit;text-align:start;color:inherit;background:var(--surf);border:2px solid var(--line);border-radius:18px;padding:24px;cursor:pointer;min-height:150px}
+.big b{display:block;font-size:24px;margin-bottom:6px}.big span{color:var(--mut);font-size:15px}
+.big:hover,.big.on{border-color:var(--pri)}
+.big.em{border-color:var(--bad);background:var(--badbg)}.big.em b{color:var(--bad)}
+label.l{display:block;color:var(--mut);font-size:14px;margin:16px 0 6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{font:inherit;font-size:16px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:12px;padding:12px 18px;min-height:52px;cursor:pointer}
+.chips button.on{background:var(--pri);color:var(--on);border-color:var(--pri)}
+.stp{display:flex;align-items:center;gap:14px}
+.stp button{width:52px;height:52px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-size:24px;cursor:pointer}
+.stp b{font-size:26px;min-width:56px;text-align:center}
+input,textarea{width:100%;font:inherit;font-size:16px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);min-height:52px}
+.btn{font:inherit;font-weight:600;font-size:17px;border:0;border-radius:14px;padding:14px 26px;background:var(--pri);color:var(--on);cursor:pointer;min-height:56px}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.bad{background:var(--bad);color:#fff}
+.btn:disabled{opacity:.4}
+button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+.nav{display:flex;justify-content:space-between;gap:12px;margin-top:20px}
+.sum .r{display:flex;justify-content:space-between;gap:8px;padding:9px 0;border-bottom:1px solid var(--line);font-size:15px}.sum .r:last-child{border:0}.sum .r span{color:var(--mut)}
+.z{cursor:pointer;stroke:var(--navy);stroke-width:.8}
+.pill{font-size:13px;font-weight:500;border-radius:99px;padding:3px 12px;background:var(--pri2);color:var(--pri);white-space:nowrap}
+.pill.ok{background:var(--okbg);color:var(--ok)}.pill.warn{background:var(--warnbg);color:var(--warn)}
+.meter{height:7px;border-radius:9px;background:var(--line);overflow:hidden;margin-top:8px}.meter i{display:block;height:100%;background:var(--pri)}
+.opt{display:block;width:100%;text-align:start;font:inherit;color:inherit;background:var(--surf);border:2px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px;cursor:pointer}
+.opt.on{border-color:var(--pri);background:var(--pri2)}
+.opt .t{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.opt small{color:var(--mut)}
+.flow{display:flex;flex-direction:column;gap:10px;max-width:520px;margin:0 auto}
+.flow div{background:var(--surf);border:2px solid var(--line);border-radius:14px;padding:16px;text-align:center;font-weight:600;opacity:.35;transition:.3s}
+.flow div.on{opacity:1;border-color:var(--pri)}
+.flow small{display:block;font-weight:400;color:var(--mut)}
+.note{font-size:13px;color:var(--mut);text-align:center;margin-top:16px}
+.toast{background:var(--okbg);color:var(--ok);padding:12px 16px;border-radius:12px;margin-top:12px;font-weight:600}
+.center{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+#boot{background:#0b1220;color:#fff;position:absolute;inset:0;z-index:5}
+#boot .lg{font-size:64px;font-weight:700;letter-spacing:2px}
+.prog{width:320px;height:6px;background:#26334a;border-radius:9px;margin-top:28px;overflow:hidden}.prog i{display:block;height:100%;width:0;background:#5cb8d9;transition:width 2.6s linear}
+.rate{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}.rate:last-child{border:0}
+.rate small{display:block;color:var(--mut)}
+.chips.n button{padding:0;width:52px}
+</style>
+</head>
+<body>
+<div id="dev"><div id="scr" dir="rtl"></div></div>
+<script>
+const $=id=>document.getElementById(id),scr=$('scr');
+const NOTE='جميع المقترحات تتطلب مراجعة واعتماد الممارس الصحي، والأداة لا تقدم تشخيصًا طبيًا.';
+const SITES={scalp:'فروة الرأس',face:'الوجه',trunk:'الصدر والظهر',abd:'جدار البطن',hand:'اليد',leg:'الساق'};
+const ROLES=[['الجرّاح','Surgeon','دعم اختيار الخيط ومراجعة الإغلاق'],['الطبيب المقيم','Resident','دعم القرار ومراجعة المعلومات'],['الطبيب المتدرب','Intern','يستفيد من المعلومات تحت الإشراف'],['ممارس صحي مؤهل','Other qualified clinician','مشارك في الإجراء']];
+const SUT=[
+ {n:'Nylon 4-0',abs:0,str:4,rx:1,good:['hand','leg','scalp','trunk'],why:'قوة شد جيدة ومرونة مع تفاعل نسيجي منخفض',ca:'يحتاج موعد إزالة'},
+ {n:'Nylon 6-0',abs:0,str:2,rx:1,good:['face'],why:'أدق ندبة وأقل تفاعل نسيجي على الوجه',ca:'يُزال خلال 5–7 أيام، لا يناسب التوتر العالي'},
+ {n:'Polypropylene 3-0',abs:0,str:4,rx:1,good:['scalp','leg','trunk','hand'],why:'سطح أملس وثبات عالٍ',ca:'قد تنفك العقدة إن لم تُحكم'},
+ {n:'PDS II 1',abs:1,str:5,rx:2,good:['abd'],why:'دعم طويل الأمد لجدار البطن',ca:'التعامل مع العقدة أبطأ'},
+ {n:'Polypropylene 1',abs:0,str:5,rx:1,good:['abd'],why:'قوة شد عالية تناسب التوتر العالي',ca:'يحتاج عقدة محكمة'},
+ {n:'Poliglecaprone 4-0',abs:1,str:3,rx:1,good:['face','hand','trunk'],why:'لا يحتاج إزالة ومريح، مناسب للأطفال',ca:'قوة شد أقل'},
+ {n:'Polyglactin 3-0',abs:1,mf:1,str:3,rx:2,good:['scalp','leg','trunk','abd'],why:'مناسب للطبقات العميقة',ca:'يفقد قوته خلال أسابيع، وتفاعله النسيجي أعلى'}];
+const D={"جميع المقترحات تتطلب مراجعة واعتماد الممارس الصحي، والأداة لا تقدم تشخيصًا طبيًا.": "All suggestions require clinician review and approval. This tool does not provide medical diagnoses.", "فروة الرأس": "Scalp", "الوجه": "Face", "الصدر والظهر": "Chest & back", "جدار البطن": "Abdominal wall", "اليد": "Hand", "الساق": "Leg", "الجرّاح": "Surgeon", "الطبيب المقيم": "Resident", "الطبيب المتدرب": "Intern", "ممارس صحي مؤهل": "Other qualified clinician", "دعم اختيار الخيط ومراجعة الإغلاق": "Suture selection support and closure review", "دعم القرار ومراجعة المعلومات": "Decision support and information review", "يستفيد من المعلومات تحت الإشراف": "Uses the information under supervision", "مشارك في الإجراء": "Participates in the procedure", "قوة شد جيدة ومرونة مع تفاعل نسيجي منخفض": "Good tensile strength and flexibility with low tissue reaction", "يحتاج موعد إزالة": "Needs a removal visit", "أدق ندبة وأقل تفاعل نسيجي على الوجه": "Finest scar and least tissue reaction on the face", "يُزال خلال 5–7 أيام، لا يناسب التوتر العالي": "Remove within 5–7 days; not for high tension", "سطح أملس وثبات عالٍ": "Smooth surface and high stability", "قد تنفك العقدة إن لم تُحكم": "Knot may slip if not secured", "دعم طويل الأمد لجدار البطن": "Long-lasting abdominal wall support", "التعامل مع العقدة أبطأ": "Slower knot handling", "قوة شد عالية تناسب التوتر العالي": "High tensile strength suits high tension", "يحتاج عقدة محكمة": "Needs a secure knot", "لا يحتاج إزالة ومريح، مناسب للأطفال": "No removal needed, comfortable, good for children", "قوة شد أقل": "Lower tensile strength", "مناسب للطبقات العميقة": "Suits deep layers", "يفقد قوته خلال أسابيع، وتفاعله النسيجي أعلى": "Loses strength within weeks; higher tissue reaction", "ذكر": "Male", "أنثى": "Female", "ضيق في الصدر وصعوبة في التنفس": "Chest tightness and dyspnoea", "جرح جراحي": "Surgical incision", "جرح قطعي": "Laceration", "تمزق": "Tear", "سطحي": "Superficial", "متوسط": "Moderate", "عميق": "Deep", "منخفض": "Low", "عالٍ": "High", "سكري": "Diabetes", "مميعات الدم": "Blood thinners", "ضعف المناعة": "Weak immunity", "تدخين": "Smoking", "لا شيء": "None", "دعم القرار السريري لاختيار الخيط الجراحي": "Clinical decision support for suture selection", "جارٍ تشغيل الجهاز…": "Starting the device…", "اضغط للتخطي": "Tap to skip", "مرحبًا بك": "Welcome", "اختر صفتك للبدء. هذا الجهاز موجّه للممارسين الصحيين داخل غرفة العمليات.": "Choose your role to begin. This device is for clinicians inside the operating room.", "ما وضع الحالة؟": "What is the case mode?", "أنت من تحدد وضع الحالة، ثم تدخل ما حدث للمريض.": "You decide the case mode, then enter what happened to the patient.", "الوضع الاعتيادي": "Normal Mode", "وضع الطوارئ": "Emergency Mode", "حالة عادية: أدخل بيانات المريض والجرح واحصل على خيارات الخيط مع الأسباب والتنبيهات": "Standard case: enter patient and wound data and get suture options with reasons and cautions", "حالة طارئة: مراجعة سريعة للخيوط المتوفرة حاليًا وتصعيد الحالة عند عدم وجود خيار آمن": "Urgent case: quick review of currently available sutures, with escalation when no safe option exists", "إنهاء الجلسة": "End session", "بيانات المريض والجرح": "Patient & wound data", "بيانات المريض": "Patient data", "المريض": "Patient", "الجرح": "Wound", "الجنس": "Sex", "العمر / الجنس": "Age / Sex", "العمر": "Age", "الحالات الصحية (اختر ما ينطبق)": "Health conditions (select all that apply)", "الحالات الصحية": "Health conditions", "موقع الجرح (اضغط على الجسم أو اختر)": "Wound location (tap the body or choose)", "موقع الجرح": "Wound location", "الموقع": "Location", "نوع الجرح": "Wound type", "النوع / العمق": "Type / Depth", "العمق": "Depth", "التوتر على الحواف": "Edge tension", "التوتر / الطول": "Tension / Length", "الطول (سم)": "Length (cm)", "تم إرفاق صورة الجرح": "Wound photo attached", "تصوير الجرح": "Capture wound photo", "العلامات الحيوية": "Vital signs", "ضغط الدم": "Blood pressure", "ضغط / نبض": "BP / Pulse", "النبض": "Heart rate", "الشكوى الرئيسية": "Chief complaint", "أسئلة طبية موجهة": "Guided medical questions", "أسئلة موجهة": "Guided questions", "هل الجرح ملوّث أو متسخ؟": "Is the wound contaminated or dirty?", "هل يحتاج الإغلاق إلى طبقات عميقة؟": "Does the closure need deep layers?", "هل يتناول المريض مميعات الدم؟": "Is the patient taking blood thinners?", "هل توجد حساسية من مواد الخيوط؟": "Any allergy to suture materials?", "الخيوط المتوفرة الآن": "Sutures available now", "الخيوط المتوفرة": "Available sutures", "اختر الخيوط الموجودة في الغرفة فقط.": "Select only the sutures in the room.", "ملخص الحالة": "Case summary", "السابق": "Back", "تغيير الوضع": "Change mode", "التالي": "Next", "تحليل وعرض الخيوط": "Analyze and show sutures", "جارٍ التحليل": "Analyzing", "الذكاء الاصطناعي ينظّم المعلومات فقط، ولا يولّد إجابات طبية من تلقاء نفسه.": "The AI only organizes information; it does not generate medical answers on its own.", "المدخلات والصورة": "Inputs and photo", "معالجة الذكاء الاصطناعي": "AI processing", "تنظيم وتحليل المدخلات": "Organizes and analyzes the inputs", "قاعدة المعلومات الطبية المراجعة (بيانات تجريبية)": "Reviewed medical database (prototype data)", "قاعدة المعلومات الطبية المراجعة": "Reviewed medical database", "مراجع محددة ومراجعة فقط": "Specific, reviewed references only", "نتائج منظمة": "Structured results", "خيارات مع المراجع والتنبيهات": "Options with references and cautions", "لا يتوفر خيار آمن مدعوم": "No supported safe option available", "لا يفترض النظام وجود حل آمن إذا لم تدعمه قاعدة المعلومات. يُنصح بتصعيد الحالة إلى المختص.": "The system does not assume a safe solution exists unless the database supports it. Escalating the case to a specialist is advised.", "تعديل الخيوط المتوفرة": "Edit available sutures", "تصعيد الحالة للمختص": "Escalate to specialist", "تم تصعيد الحالة إلى المختص": "Case escalated to a specialist", "الخيوط المقترحة": "Suggested sutures", "مرتبة حسب الملاءمة وفق قاعدة المعلومات الطبية (": "Ranked by suitability per the medical database (", " خيارات).": " options).", "غير قابل للامتصاص": "Non-absorbable", "قابل للامتصاص": "Absorbable", "ملاءمة ": "Suitability ", "الثقة ": "Confidence ", "سبب الاقتراح": "Why suggested", "الأنسب لـ": "Best fit for ", "مع توتر": "with tension", "خيار بديل مقبول.": "Acceptable alternative.", "التنبيهات والقيود": "Cautions and limits", "المرجع": "Reference", "الجرح ملوّث والخيط متعدد الألياف، راجع المناسبة": "Wound is contaminated and the suture is multifilament; review suitability", "المريض سكري، راقب الالتئام": "Patient has diabetes; monitor healing", "مميعات الدم: راقب النزف حول الغرز": "Blood thinners: monitor bleeding around stitches", "تعديل البيانات": "Edit data", "اعتماد هذا الخيط": "Use this suture", "قيد الإغلاق": "Closing in progress", "تم الانتهاء من الإغلاق": "Closure finished", "تقييم ما بعد الإغلاق": "Post-Closure Evaluation", "قيّم كل جانب من 1 إلى 5. الخيط المستخدم: ": "Rate each aspect from 1 to 5. Suture used: ", "اختيار الخيط": "Suture Selection", "ملاءمة الخيط المستخدم": "Suitability of the suture used", "المسافات": "Spacing", "انتظام المسافات بين الغرز": "Evenness between stitches", "تقارب حواف الجرح": "Wound Edge Approximation", "مدى تلامس الحواف": "How closely edges meet", "تقنية الخياطة": "Suturing Technique", "طريقة تنفيذ الغرز": "How stitches were executed", "جودة الإغلاق العامة": "Overall Closure Quality", "الإغلاق بشكل عام": "Overall closure", "ملاحظات للممارس المراجع": "Notes for the reviewing clinician", "ملاحظات": "Notes", "متوسط الجودة": "Average quality", "من 5": "of 5", "حفظ التقييم وإنهاء الحالة": "Save evaluation and finish case", "تم حفظ الحالة": "Case saved", "متوسط جودة الإغلاق: ": "Average closure quality: ", " · الخيط: ": " · Suture: ", "حالة جديدة": "New case", " سم": " cm", "، ": ", ", "–": "–"},X={"نعم": "Yes", "لا": "No", "غير معروف": "Unknown"};
+let L='ar',CUR='';
+const PH=Object.entries(D).sort((a,b)=>b[0].length-a[0].length),EX={...D,...X};
+function loc(root){const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),ns=[];while(w.nextNode())ns.push(w.currentNode);
+ ns.forEach(n=>{let s=n.nodeValue;if(!/[\u0600-\u06FF]/.test(s))return;const tr=s.trim();if(EX[tr]!==undefined){n.nodeValue=s.replace(tr,EX[tr]);return}for(const[a,b]of PH)s=s.split(a).join(b);n.nodeValue=s});
+ root.querySelectorAll('[placeholder]').forEach(e=>{const p=e.getAttribute('placeholder');if(EX[p])e.setAttribute('placeholder',EX[p])})}
+function fin(){scr.dir=L=='ar'?'rtl':'ltr';if(L=='en')loc(scr)}
+function lang(){L=L=='ar'?'en':'ar';const c=CUR=='analyze'?'results':CUR;c=='closing'?closing(1):window[c]()}
+let S={};
+function reset(){S={role:null,mode:null,step:0,sel:0,sc:[0,0,0,0,0],
+ p:{age:45,sex:'ذكر',conds:[],bp:'156 / 94',hr:'98',spo2:'96',cc:'ضيق في الصدر وصعوبة في التنفس'},
+ w:{site:'abd',type:'جرح جراحي',depth:'عميق',tension:'عالٍ',len:6,photo:0},
+ q:{contam:'لا',deep:'نعم',anti:'لا',allergy:'لا'},av:[0,2,5]}}
+reset();
+const clk=()=>new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+function frame(html){
+ scr.innerHTML=`<div class="bar ${S.mode=='em'?'em':''}"><b>LN PRO</b>${S.role?`<span>${S.role[0]}</span>`:''}<span class="grow"></span>${S.mode?`<span>${S.mode=='em'?'وضع الطوارئ':'الوضع الاعتيادي'}</span>`:''}<span>${clk()}</span><button onclick="lang()">${L=='ar'?'English':'عربي'}</button>${S.role?'<button onclick="logout()">إنهاء الجلسة</button>':''}</div><div id="body">${html}</div>`;fin()}
+function logout(){clearInterval(S.timer);reset();login()}
+/* 1 boot */
+function boot(){
+ scr.innerHTML=`<div id="boot" class="center" onclick="login()"><div class="lg">LN PRO</div><p style="color:#9fb3cc;margin:6px 0 0">دعم القرار السريري لاختيار الخيط الجراحي</p><div class="prog"><i id="pb"></i></div><p id="bt" style="color:#9fb3cc;font-size:14px;margin-top:14px">جارٍ تشغيل الجهاز…</p><p style="color:#5d7190;font-size:13px;position:absolute;bottom:24px">اضغط للتخطي</p><button style="position:absolute;top:18px;inset-inline-end:18px;background:#26334a;color:#fff;border:0;border-radius:8px;padding:8px 14px;font:inherit;cursor:pointer;min-height:40px" onclick="event.stopPropagation();lang()">${L=='ar'?'English':'عربي'}</button></div>`;fin();
+ setTimeout(()=>{$('pb')&&($('pb').style.width='100%')},60);
+ setTimeout(()=>{$('bt')&&($('bt').textContent=L=='en'?'Loading the medical database…':'جارٍ تحميل قاعدة المعلومات الطبية…')},1300);
+ S.bt=setTimeout(()=>{$('boot')&&login()},2900)}
+/* 2 login */
+function login(){clearTimeout(S.bt);
+ frame(`<h1>مرحبًا بك</h1><p class="sub">اختر صفتك للبدء. هذا الجهاز موجّه للممارسين الصحيين داخل غرفة العمليات.</p><div class="grid g2">${ROLES.map((r,i)=>`<button class="big" onclick="pick(${i})"><b>${r[0]}</b><span>${L=='ar'?r[1]+' · ':''}${r[2]}</span></button>`).join('')}</div>`)}
+function pick(i){S.role=ROLES[i];mode()}
+/* 3 mode */
+function mode(){S.mode=null;S.step=0;
+ frame(`<h1>ما وضع الحالة؟</h1><p class="sub">أنت من تحدد وضع الحالة، ثم تدخل ما حدث للمريض.</p><div class="grid g2"><button class="big" onclick="start('n')"><b>الوضع الاعتيادي</b><span>حالة عادية: أدخل بيانات المريض والجرح واحصل على خيارات الخيط مع الأسباب والتنبيهات</span></button><button class="big em" onclick="start('em')"><b>وضع الطوارئ</b><span>حالة طارئة: مراجعة سريعة للخيوط المتوفرة حاليًا وتصعيد الحالة عند عدم وجود خيار آمن</span></button></div><p class="note">${NOTE}</p>`)}
+function start(m){reset_case();S.mode=m;S.step=0;flow()}
+function reset_case(){const r=S.role;reset();S.role=r}
+/* 4 entry */
+const set=(p,v)=>{const[a,b]=p.split('.');S[a][b]=v;flow()};
+const chips=(p,opts,cur)=>`<div class="chips">${opts.map(o=>`<button class="${o==cur?'on':''}" onclick="set('${p}','${o}')">${o}</button>`).join('')}</div>`;
+const stp=(p,v,mn,mx)=>`<div class="stp"><button onclick="set('${p}',${Math.min(mx,v+1)})">+</button><b>${v}</b><button onclick="set('${p}',${Math.max(mn,v-1)})">−</button></div>`;
+function setSite(s){S.w.site=s;flow()}
+function fig(){const f=s=>S.w.site==s?'#d9372b':'var(--skin)',z=(s,t)=>`class="z" onclick="setSite('${s}')" fill="${f(s)}" ${t}`;
+ return `<svg viewBox="0 0 120 220" height="330"><ellipse ${z('scalp','cx="60" cy="9" rx="13" ry="7"')}/><circle ${z('face','cx="60" cy="24" r="13"')}/><rect ${z('trunk','x="40" y="40" width="40" height="38" rx="10"')}/><rect ${z('abd','x="42" y="80" width="36" height="34" rx="8"')}/><rect ${z('hand','x="20" y="42" width="14" height="60" rx="7"')}/><rect ${z('hand','x="86" y="42" width="14" height="60" rx="7"')}/><circle ${z('hand','cx="27" cy="110" r="8"')}/><circle ${z('hand','cx="93" cy="110" r="8"')}/><rect ${z('leg','x="42" y="118" width="16" height="92" rx="7"')}/><rect ${z('leg','x="62" y="118" width="16" height="92" rx="7"')}/></svg>`}
+const STEPS=()=>['المريض','الجرح',S.mode=='em'?'الخيوط المتوفرة':'أسئلة موجهة'];
+function flow(){
+ const p=S.p,w=S.w,q=S.q,em=S.mode=='em';let main='';
+ if(S.step==0){
+  main=`<h2>بيانات المريض</h2><label class="l">العمر</label>${stp('p.age',p.age,0,110)}<label class="l">الجنس</label>${chips('p.sex',['ذكر','أنثى'],p.sex)}<label class="l">حالات صحية (اختر ما ينطبق)</label><div class="chips">${['سكري','مميعات الدم','ضعف المناعة','تدخين'].map(c=>`<button class="${p.conds.includes(c)?'on':''}" onclick="tc('${c}')">${c}</button>`).join('')}</div>`+
+  (em?`<label class="l">العلامات الحيوية</label><div class="grid g4" style="grid-template-columns:repeat(3,1fr)"><div><small>ضغط الدم</small><input value="${p.bp}" onchange="S.p.bp=this.value"></div><div><small>النبض</small><input value="${p.hr}" onchange="S.p.hr=this.value"></div><div><small>SpO₂ %</small><input value="${p.spo2}" onchange="S.p.spo2=this.value"></div></div><label class="l">الشكوى الرئيسية</label><textarea rows="2" onchange="S.p.cc=this.value">${p.cc}</textarea>`:'')
+ }else if(S.step==1){
+  main=`<h2>الجرح</h2><div style="display:grid;grid-template-columns:150px 1fr;gap:20px"><div class="center"><div style="margin-top:4px">${fig()}</div><b style="margin-top:6px">${SITES[w.site]}</b></div><div><label class="l" style="margin-top:0">موقع الجرح (اضغط على الجسم أو اختر)</label><div class="chips">${Object.keys(SITES).map(k=>`<button class="${w.site==k?'on':''}" onclick="setSite('${k}')">${SITES[k]}</button>`).join('')}</div><label class="l">نوع الجرح</label>${chips('w.type',['جرح جراحي','جرح قطعي','تمزق'],w.type)}<label class="l">العمق</label>${chips('w.depth',['سطحي','متوسط','عميق'],w.depth)}<label class="l">التوتر على الحواف</label>${chips('w.tension',['منخفض','متوسط','عالٍ'],w.tension)}<div style="display:flex;gap:30px;align-items:end;flex-wrap:wrap"><div><label class="l">الطول (سم)</label>${stp('w.len',w.len,1,40)}</div><button class="btn ghost" onclick="set('w.photo',${w.photo?0:1})">${w.photo?'✓ تم إرفاق صورة الجرح':'تصوير الجرح'}</button></div></div></div>`
+ }else if(!em){
+  const QS=[['contam','هل الجرح ملوّث أو متسخ؟'],['deep','هل يحتاج الإغلاق إلى طبقات عميقة؟'],['anti','هل يتناول المريض مميعات الدم؟'],['allergy','هل توجد حساسية من مواد الخيوط؟']];
+  main=`<h2>أسئلة طبية موجهة</h2>${QS.map(x=>`<label class="l">${x[1]}</label>${chips('q.'+x[0],['نعم','لا','غير معروف'],q[x[0]])}`).join('')}`
+ }else{
+  main=`<h2>الخيوط المتوفرة الآن</h2><p class="sub">اختر الخيوط الموجودة في الغرفة فقط.</p><div class="chips">${SUT.map((s,i)=>`<button class="${S.av.includes(i)?'on':''}" onclick="ta(${i})">${s.n}</button>`).join('')}</div>`}
+ const sum=`<div class="card sum"><h2>ملخص الحالة</h2><div class="r"><span>العمر / الجنس</span><b>${p.age} · ${p.sex}</b></div><div class="r"><span>الحالات الصحية</span><b>${p.conds.join('، ')||'لا شيء'}</b></div><div class="r"><span>الموقع</span><b>${SITES[w.site]}</b></div><div class="r"><span>النوع / العمق</span><b>${w.type} · ${w.depth}</b></div><div class="r"><span>التوتر / الطول</span><b>${w.tension} · ${w.len} سم</b></div>${em?`<div class="r"><span>ضغط / نبض</span><b>${p.bp} · ${p.hr}</b></div>`:''}</div>`;
+ const last=S.step==2;
+ frame(`<div class="steps">${STEPS().map((t,i)=>`<div class="${i==S.step?'on':i<S.step?'dn':''}">${i<S.step?'✓ ':''}${t}</div>`).join('')}</div><div class="two"><div class="card">${main}</div><div>${sum}</div></div><div class="nav"><button class="btn ghost" onclick="${S.step?'S.step--;flow()':'mode()'}">${S.step?'السابق':'تغيير الوضع'}</button><button class="btn ${em&&last?'bad':''}" ${em&&last&&!S.av.length?'disabled':''} onclick="${last?'analyze()':'S.step++;flow()'}">${last?'تحليل وعرض الخيوط':'التالي'}</button></div>`)}
+function tc(c){const a=S.p.conds,i=a.indexOf(c);i<0?a.push(c):a.splice(i,1);flow()}
+function ta(i){const a=S.av,k=a.indexOf(i);k<0?a.push(i):a.splice(k,1);flow()}
+/* 5 analyze */
+function analyze(){
+ const st=[['بيانات المريض والجرح','المدخلات والصورة'],['معالجة الذكاء الاصطناعي','تنظيم وتحليل المدخلات'],['قاعدة المعلومات الطبية المراجعة','مراجع محددة ومراجعة فقط'],['نتائج منظمة','خيارات مع المراجع والتنبيهات']];
+ frame(`<div class="center" style="height:100%"><h1>جارٍ التحليل</h1><p class="sub">الذكاء الاصطناعي ينظّم المعلومات فقط، ولا يولّد إجابات طبية من تلقاء نفسه.</p><div class="flow">${st.map((s,i)=>`<div id="f${i}">${s[0]}<small>${s[1]}</small></div>`).join('')}</div></div>`);
+ st.forEach((_,i)=>setTimeout(()=>{$('f'+i)&&$('f'+i).classList.add('on')},300+i*550));
+ setTimeout(results,2800)}
+function rank(){const w=S.w,p=S.p,q=S.q;
+ let r=SUT.map((s,i)=>{let sc=48;if(s.good.includes(w.site))sc+=30;
+  if(w.tension=='عالٍ')sc+=s.str*4-8;else if(w.tension=='متوسط')sc+=(s.str>=3&&s.str<=4?10:0);else sc+=(s.str<=3?10:0);
+  if(q.contam=='نعم'&&s.mf)sc-=18;if(p.age<12&&s.abs)sc+=8;if(p.conds.includes('سكري')||p.conds.includes('ضعف المناعة'))sc-=s.rx*3;
+  return{i,s,sc:Math.max(30,Math.min(96,Math.round(sc)))}}).sort((a,b)=>b.sc-a.sc);
+ if(S.mode=='em')r=r.filter(x=>S.av.includes(x.i));return r.slice(0,5)}
+/* 6 results */
+function results(){
+ const R=rank(),em=S.mode=='em',safe=R.filter(x=>x.sc>=65);
+ if(em&&!safe.length){frame(`<div class="center" style="height:100%"><h1>لا يتوفر خيار آمن مدعوم</h1><p class="sub" style="max-width:560px">لا يفترض النظام وجود حل آمن إذا لم تدعمه قاعدة المعلومات. يُنصح بتصعيد الحالة إلى المختص.</p><div class="nav"><button class="btn ghost" onclick="S.step=2;flow()">تعديل الخيوط المتوفرة</button><button class="btn bad" onclick="this.insertAdjacentHTML('afterend','<div class=toast>تم تصعيد الحالة إلى المختص</div>')">تصعيد الحالة للمختص</button></div></div>`);return}
+ const x=R[Math.min(S.sel,R.length-1)],s=x.s,q=S.q,w=S.w;
+ const cau=[s.ca];if(q.contam=='نعم'&&s.mf)cau.push('الجرح ملوّث والخيط متعدد الألياف، راجع المناسبة');if(S.p.conds.includes('سكري'))cau.push('المريض سكري، راقب الالتئام');if(q.anti=='نعم')cau.push('مميعات الدم: راقب النزف حول الغرز');
+ frame(`<h1>الخيوط المقترحة</h1><p class="sub">مرتبة حسب الملاءمة وفق قاعدة المعلومات الطبية (${R.length} خيارات).</p><div class="two" style="grid-template-columns:380px 1fr"><div>${R.map((o,i)=>`<button class="opt ${o==x?'on':''}" onclick="S.sel=${i};results()"><div class="t"><b>${i+1}. ${o.s.n}</b><span class="pill">${o.s.abs?'قابل للامتصاص':'غير قابل للامتصاص'}</span></div><div class="meter"><i style="width:${o.sc}%"></i></div><small>ملاءمة ${o.sc}%</small></button>`).join('')}</div>
+ <div class="card"><div style="display:flex;justify-content:space-between;align-items:center"><h2 style="margin:0;font-size:24px">${s.n}</h2><span class="pill ${x.sc>=65?'ok':'warn'}">الثقة ${x.sc}%</span></div>
+ <label class="l">سبب الاقتراح</label><div>${s.good.includes(w.site)?`الأنسب لـ${SITES[w.site]} مع توتر ${w.tension}. `:'خيار بديل مقبول. '}${s.why}.</div>
+ <label class="l">التنبيهات والقيود</label><ul style="margin:0;padding-inline-start:20px">${cau.map(c=>`<li>${c}</li>`).join('')}</ul>
+ <label class="l">المرجع</label><div>قاعدة المعلومات الطبية المراجعة (بيانات تجريبية)</div>
+ <div class="nav"><button class="btn ghost" onclick="S.step=2;flow()">تعديل البيانات</button><button class="btn" onclick="S.chosen=x_();closing()">اعتماد هذا الخيط</button></div></div></div><p class="note">${NOTE}</p>`);
+ window.x_=()=>x}
+/* 7 closing */
+function closing(k){if(!k)S.t=0;clearInterval(S.timer);
+ frame(`<div class="center" style="height:100%"><span class="pill">قيد الإغلاق</span><h1 style="margin-top:12px">${S.chosen.s.n}</h1><p class="sub">${SITES[S.w.site]} · ${S.w.type}</p><div id="tm" style="font-size:72px;font-weight:700;margin:10px 0 24px">00:00</div><button class="btn" onclick="clearInterval(S.timer);post()">تم الانتهاء من الإغلاق</button></div>`);
+ S.timer=setInterval(()=>{S.t++;const e=$('tm');if(!e)return clearInterval(S.timer);e.textContent=String(Math.floor(S.t/60)).padStart(2,'0')+':'+String(S.t%60).padStart(2,'0')},1000)}
+/* 8 post closure */
+const ASP=[['اختيار الخيط','ملاءمة الخيط المستخدم'],['المسافات','انتظام المسافات بين الغرز'],['تقارب حواف الجرح','مدى تلامس الحواف'],['تقنية الخياطة','طريقة تنفيذ الغرز'],['جودة الإغلاق العامة','الإغلاق بشكل عام']];
+function donut(){const n=S.sc.filter(x=>x).length,t=S.sc.reduce((a,b)=>a+b,0),avg=n?(t/n).toFixed(1):'–',C=2*Math.PI*44;
+ return `<svg viewBox="0 0 110 110" width="190"><circle cx="55" cy="55" r="44" fill="none" stroke="var(--line)" stroke-width="12"/><circle cx="55" cy="55" r="44" fill="none" stroke="var(--pri)" stroke-width="12" stroke-linecap="round" stroke-dasharray="${C*t/25} ${C}" transform="rotate(-90 55 55)"/><text x="55" y="58" text-anchor="middle" font-size="24" font-weight="700" fill="var(--ink)">${avg}</text><text x="55" y="74" text-anchor="middle" font-size="9" fill="var(--mut)">من 5</text></svg>`}
+function rt(i,v){S.sc[i]=v;post()}
+function post(){
+ const ok=S.sc.every(x=>x);
+ frame(`<h1>تقييم ما بعد الإغلاق</h1><p class="sub">قيّم كل جانب من 1 إلى 5. الخيط المستخدم: ${S.chosen.s.n}</p><div class="two" style="grid-template-columns:1fr 280px"><div class="card">${ASP.map((a,i)=>`<div class="rate"><div><b>${a[0]}</b><small>${a[1]}</small></div><div class="chips n" style="direction:ltr">${[1,2,3,4,5].map(n=>`<button class="${n<=S.sc[i]?'on':''}" onclick="rt(${i},${n})">${n}</button>`).join('')}</div></div>`).join('')}<label class="l">ملاحظات</label><textarea rows="2" placeholder="ملاحظات للممارس المراجع"></textarea></div><div class="card center"><h2>متوسط الجودة</h2>${donut()}</div></div><div class="nav"><span></span><button class="btn" ${ok?'':'disabled'} onclick="done()">حفظ التقييم وإنهاء الحالة</button></div><p class="note">${NOTE}</p>`)}
+function done(){
+ const avg=(S.sc.reduce((a,b)=>a+b,0)/5).toFixed(1);
+ frame(`<div class="center" style="height:100%"><div style="font-size:64px;color:var(--ok)">✓</div><h1>تم حفظ الحالة</h1><p class="sub">متوسط جودة الإغلاق: ${avg} / 5 · الخيط: ${S.chosen.s.n}</p><div class="nav"><button class="btn ghost" onclick="logout()">إنهاء الجلسة</button><button class="btn" onclick="reset_case();mode()">حالة جديدة</button></div></div>`)}
+function fit(){const k=Math.min(innerWidth/1340,innerHeight/880),d=$('dev');d.style.transform=`scale(${k})`;d.style.left=(innerWidth-1300*k)/2+'px';d.style.top=(innerHeight-840*k)/2+'px'}
+['boot','login','mode','flow','analyze','results','closing','post','done'].forEach(n=>{const f=window[n];window[n]=function(...a){CUR=n;return f.apply(this,a)}});
+addEventListener('resize',fit);fit();boot();
+</script>
+</body>
+</html>
